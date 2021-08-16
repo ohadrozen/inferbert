@@ -27,7 +27,12 @@ Citation:
 
 **Requirements**: Huggingface pytorch_pretrained_bert library.
 
-**Getting started**: Clone all directories recursively
+**Getting started**
+1. Clone all directories recursively.
+2. Download https://nlp.biu.ac.il/~ohadr/inferbert/BERT_base_84.56/pytorch_model.bin into source/models/BERT_base_84.56/
+3. Download https://nlp.biu.ac.il/~ohadr/inferbert/MNLI/train.tsv into datasets/MNLI/
+
+
 
 **Important Note**: Since we combine ramdom weights (S-KAR) with already-trained weights (the original BERT), on small training sets the S-KAR weights might not converge well. To solve that, we repeat the first training phase (See Section 5- Training Procedure in the paper) with different random initializations, and evaluate the result on the dev set. We then use the best performing model (among the different initializations) and continue to the secnod training phase. The argument num_of_rand_init controls the number of such initializations. 
 
