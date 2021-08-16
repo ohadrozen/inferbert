@@ -25,7 +25,7 @@ Citation:
 
 ## Code
 
-**Requirements**: Huggingface pytorch_pretrained_bert library.
+**Requirements**: Huggingface pytorch_pretrained_bert library (older than the Transformers library).
 
 **Getting started**
 1. Clone all directories recursively.
