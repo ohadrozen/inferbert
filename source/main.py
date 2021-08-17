@@ -897,7 +897,7 @@ def tokens_to_ext_emb(tokens, input_ids, seg_b_loc, use_ext_embeddings, tokenize
     def validate_new_ids(word, input_ids, word_ind, new2old_ind, offset):
         retrieved_token = tokenizer.convert_ids_to_tokens([input_ids[new2old_ind[word_ind + offset]]])[0]
         relevant_word_piece = word[:len(retrieved_token)]
-        if retrieved_token != relevant_word_piece:
+        if retrieved_token != relevant_word_piece and wnu.to_singular(retrieved_token) != wnu.to_singular(relevant_word_piece):
             my_logger(f"index of wordpiece doesn't match the index of original sentence: '{retrieved_token}' != '{relevant_word_piece}'")
             my_logger(f"\nExample:\nPremise:{example.text_a}\nHypothesis:{example.text_b}\n")
             print('********************************************************')
@@ -942,7 +942,7 @@ def tokens_to_ext_emb(tokens, input_ids, seg_b_loc, use_ext_embeddings, tokenize
                 ext_emb[new2old_ind[location_i + offset[0]]] = relation2id_vocab['location_tail']
                 if not (tokenizer.convert_ids_to_tokens([input_ids[new2old_ind[location_i + offset[0]]]])[0] == location[:len(tokenizer.convert_ids_to_tokens([input_ids[new2old_ind[location_i + offset[0]]]])[0])]):
                     warnings.warn(f"index of wordpiece doesn't match the index of original sentence: '{tokenizer.convert_ids_to_tokens([input_ids[new2old_ind[location_i + offset[0]]]])[0]}' != '{location[:len(tokenizer.convert_ids_to_tokens([input_ids[new2old_ind[location_i + offset[0]]]])[0])]}'")
-                    my_logger(f"Warning! index of wordpiece doesn't match the index of original sentence: '{tokenizer.convert_ids_to_tokens([input_ids[new2old_ind[location_i + offset[0]]]])[0]}' != '{location[:len(tokenizer.convert_ids_to_tokens([input_ids[new2old_ind[location_i + offset[0]]]])[0])]}'")
+                    my_logger(f"=2= Warning! index of wordpiece doesn't match the index of original sentence: '{tokenizer.convert_ids_to_tokens([input_ids[new2old_ind[location_i + offset[0]]]])[0]}' != '{location[:len(tokenizer.convert_ids_to_tokens([input_ids[new2old_ind[location_i + offset[0]]]])[0])]}'")
                     my_logger(f"\nExample:\nPremise:{example.text_a}\nHypothesis:{example.text_b}\n")
                     print('********************************************************')
             for country_i in pairs[country]['country_ind']:

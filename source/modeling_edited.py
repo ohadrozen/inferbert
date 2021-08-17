@@ -1365,16 +1365,12 @@ class BertWrapper(PreTrainedBertModel):
         if config.uniform_ext_emb:  # False by default
             self.ext_embeddings.weight.data.uniform_(-12.49, 4.69)   # so it matches the range of pre-trained bert weights for the word piece embeddings
             print('------ activating "self.ext_embeddings.weight.data.uniform_(-12.49, 4.69)"')
-        # if config.ext_emb_method=='add':
-        #     self.ext_embeddings.weight.data.fill_(0)    # when adding the embedding, initializing the external embedding with zeros to avoid adding noise to other embeddings
+
         # Original BERT
         self.bert_classifier = BertForSequenceClassification(config, num_labels=num_labels, ext_embeddings_type=ext_embeddings_type)
         if load_model_file is not None: # if None - don't load anything (BERT model without pretraining)
             self.bert_classifier.load_state_dict(torch.load(load_model_file), strict=False)   # loading pre-train (and fine-tuned?) model
         # TODO: make it load bert_pretrained_LM if ordered so from above. use BertForSequenceClassification.from_pretrained...
-        # cache_dir = args.cache_dir if args.cache_dir else os.path.join(PYTORCH_PRETRAINED_BERT_CACHE, 'distributed_{}'.format(args.local_rank))
-        # my_logger("Reseting model. Device = %s, %d GPUs" % (device, n_gpu))
-        # model = BertForSequenceClassification.from_pretrained(args.bert_model, cache_dir=cache_dir, num_labels = num_labels, ext_embeddings_type=args.ext_embeddings_type)
 
         # Adding external Q, K and V for concatenation of external embedding to the first (or all) layer of BERT
         if config.hidden_size % config.num_attention_heads != 0:
@@ -1382,10 +1378,6 @@ class BertWrapper(PreTrainedBertModel):
         self.num_attention_heads = config.num_attention_heads
         self.attention_head_size = int(config.hidden_size / config.num_attention_heads)
         self.all_head_size = self.num_attention_heads * self.attention_head_size
-
-        # self.query = nn.Linear(config.ext_emb_size, self.all_head_size)
-        # self.key = nn.Linear(config.ext_emb_size, self.all_head_size)
-        # self.value = nn.Linear(config.ext_emb_size, self.all_head_size)
 
         if ext_embeddings_type == 'class_fixed_concat':
             self.class_embeddings = utils.load_pickle('classes_embeddings.pkl')     # using the word embedding of the name of the class (e.g. class_embeddings['fruits'] is the word_embeddings of 'fruits')
