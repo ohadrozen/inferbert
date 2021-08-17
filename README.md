@@ -67,7 +67,7 @@ python main.py \\
 --inferbert_to_load 4
 
 ## Datasets
-The directory 'inferbert_datasets_combined' includes the training set and the dev set that combines all phenomena as described in our paper. For test, each phenomena has its own test set: seen (including entities that have been seen in the training set) and unseen (new entities that haven't been seen during training). 'inferbert_datasets_separate' includes the training set of each phenomenon separately.
+The directory 'inferbert_datasets_combined' includes the training set (train_four_phenomena.json) and the dev (dev_four_phenomena.json) set that combines all phenomena as described in our paper. For test, each phenomena has its own test set: seen (including entities that have been seen in the training set) and unseen (new entities that haven't been seen during training). 'inferbert_datasets_separate' includes the training set of each phenomenon separately.
 
 The location test sets include two types: common- incorporating USA locations with larger population, and rare- with smaller population. The test results we report in the paper for the location phenomenon are the averaged results of the two types. 
 
