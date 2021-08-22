@@ -187,7 +187,7 @@ def is_cohyponym_for_similar_words(word, hyper_sense, start_time):
     if hyper_sense is None:     # if we get None as an input for hyper_sense (means there was a bug somehow finding the relevant sense) - return it's not a co-hyponym
         return False
     word_l = lemmatizer.lemmatize(word.strip())
-    t1 = tic()
+    t1 = utils.Tic()
     found = find_hyponyms([hyper_sense], word_l)
     print("find_hyponyms took ",t1.toc())
     return found
@@ -201,7 +201,7 @@ def is_cohyponym_for_similar_words(word, hyper_sense, start_time):
     if hyper_sense is None:     # if we get None as an input for hyper_sense (means there was a bug somehow finding the relevant sense) - return it's not a co-hyponym
         return False
     word_l = lemmatizer.lemmatize(word.strip())
-    t1 = tic()
+    t1 = utils.Tic()
     found = find_hyponyms([hyper_sense], word_l)
     print("find_hyponyms took ",t1.toc())
     return found
